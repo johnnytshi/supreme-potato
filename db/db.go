@@ -30,10 +30,44 @@ func DB() *db {
 	return d
 }
 
-func (d *db) ListTabls() {
+func (d *db) CreateTable(name string) {
+	params := &dynamodb.CreateTableInput{
+		AttributeDefinitions: []*dynamodb.AttributeDefinition{
+			{
+				AttributeName: aws.String("name"),
+				AttributeType: aws.String("S"),
+			},
+		},
+		KeySchema: []*dynamodb.KeySchemaElement{
+			{
+				AttributeName: aws.String("name"),
+				KeyType:       aws.String("HASH"),
+			},
+		},
+		ProvisionedThroughput: &dynamodb.ProvisionedThroughput{
+			ReadCapacityUnits:  aws.Int64(config.Config().DynamodbReadCapacityUnits),
+			WriteCapacityUnits: aws.Int64(config.Config().DynamodbWriteCapacityUnits),
+		},
+		TableName: aws.String(name),
+	}
+
+	resp, err := d.dyna.CreateTable(params)
+
+	if err != nil {
+		// Print the error, cast err to awserr.Error to get the Code and
+		// Message from an error.
+		fmt.Println(err.Error())
+		return
+	}
+
+	// Pretty-print the response data.
+	fmt.Println(resp)
+}
+
+func (d *db) ListTables() {
 	params := &dynamodb.ListTablesInput{
-		ExclusiveStartTableName: aws.String("TableName"),
-		Limit: aws.Int64(1),
+	// ExclusiveStartTableName: aws.String("TableName"),
+	// Limit: aws.Int64(5),
 	}
 	resp, err := d.dyna.ListTables(params)
 

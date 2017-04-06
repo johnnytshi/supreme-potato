@@ -5,8 +5,8 @@ import "sync"
 type config struct {
 	DynamodbEndpoint           string
 	DynamodbRegion             string
-	DynamodbReadCapacityUnits  int
-	DynamodbWriteCapacityUnits int
+	DynamodbReadCapacityUnits  int64
+	DynamodbWriteCapacityUnits int64
 }
 
 var (

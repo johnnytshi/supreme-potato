@@ -14,7 +14,9 @@ func main() {
 	fmt.Println("It's better to be a pirate than join the navy.")
 	(&cli.App{}).Run(os.Args)
 
-	db.DB().ListTabls()
+	db.DB().ListTables()
+
+	//pod.Run()
 
 	// create the DB table if needed
 
