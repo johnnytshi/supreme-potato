@@ -7,6 +7,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
+	"github.com/supreme-potato/config"
 )
 
 type db struct {
@@ -21,7 +22,7 @@ var (
 func DB() *db {
 	once.Do(func() {
 		sess := session.Must(session.NewSession())
-		svc := dynamodb.New(sess, aws.NewConfig().WithEndpoint("http://localhost:8000").WithRegion("us-west-2"))
+		svc := dynamodb.New(sess, aws.NewConfig().WithEndpoint(config.Config().DynamodbEndpoint).WithRegion(config.Config().DynamodbRegion))
 		d = &db{
 			dyna: svc,
 		}

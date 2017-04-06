@@ -16,23 +16,7 @@ func main() {
 
 	db.DB().ListTabls()
 
-	// sess := session.Must(session.NewSession())
-	//
-	// var svc *DynamoDB
-	// svc = dynamodb.New(sess, aws.NewConfig().WithEndpoint("http://localhost:8000").WithRegion("us-west-2"))
-	//
-	// params := &dynamodb.ListTablesInput{
-	// 	ExclusiveStartTableName: aws.String("TableName"),
-	// 	Limit: aws.Int64(1),
-	// }
-	// resp, err := svc.ListTables(params)
-	//
-	// if err != nil {
-	// 	fmt.Println(err.Error())
-	// 	return
-	// }
-	//
-	// fmt.Println(resp)
+	// create the DB table if needed
 
 	// list folders
 
