@@ -5,26 +5,45 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/supreme-potato/db"
+	"github.com/supreme-potato/pod"
 
 	"gopkg.in/urfave/cli.v2"
 )
 
 func main() {
-	fmt.Println("It's better to be a pirate than join the navy.")
-	(&cli.App{}).Run(os.Args)
+	(&cli.App{Commands: []*cli.Command{
+		{
+			Name:    "pod",
+			Aliases: []string{"p"},
+			Usage:   "let's make pod better",
+			Subcommands: []*cli.Command{
+				{
+					Name:  "run",
+					Usage: "process spec repo",
+					Flags: []cli.Flag{
+						&cli.StringFlag{
+							Name:  "repo-path",
+							Value: "/Users/tingshi/.cocoapods/repos/master/master",
+							Usage: "location of the spec repo",
+						},
+					},
+					Action: func(c *cli.Context) error {
+						pod.Run(c.String("repo-path"))
+						return nil
+					},
+				},
+				{
+					Name:  "local",
+					Usage: "setup local db tables",
+					Action: func(c *cli.Context) error {
+						pod.SetupLocal()
+						return nil
+					},
+				},
+			},
+		},
+	},
+	}).Run(os.Args)
 
-	db.DB().ListTables()
-
-	//pod.Run()
-
-	// create the DB table if needed
-
-	// list folders
-
-	// parse json
-
-	// dump into db
-
-	// repeat
+	fmt.Println("\n\n### be a rebel http://www.wikihow.com/Be-a-Rebel")
 }
